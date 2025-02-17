@@ -1,40 +1,25 @@
-// Check Substring and Count Occurrences (Without Library Functions).
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
-int isSubstring(char str[], char sub[]) {
-    int i, j, count = 0;
-    int strLen = strlen(str);
-    int subLen = strlen(sub);
-
-    for (i = 0; i <= strLen - subLen; i++) {
-        j = 0;
-        while (j < subLen && str[i + j] == sub[j]) {
-            j++;
-        }
-
-        if (j == subLen) {
-            count++;
-        }
-    }
-    return count;
+int Sum(int arr[], int n) {
+    int sum = 0;
+    for (int index = 0; index < n; index++)
+        sum += arr[index];
+    return sum;
 }
 
 int main() {
-    char str[100], sub[50];
-
-    printf("Enter the main string: ");
-    scanf(" %[^\n]", str);
+    int *arr, n;
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
     
-    printf("Enter the substring to search: ");
-    scanf(" %[^\n]", sub);
-
-    int occurrences = isSubstring(str, sub);
-
-    if (occurrences > 0)
-        printf("Substring found %d times.\n", occurrences);
-    else
-        printf("Substring not found.\n");
-
+    arr = (int *)malloc(n * sizeof(int));    
+    printf("Enter elements: ");
+    for (int index = 0; index < n; index++)
+        scanf("%d", &arr[index]);
+    
+    printf("Sum: %d\n", Sum(arr, n));
+    
+    free(arr);
     return 0;
 }

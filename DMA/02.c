@@ -1,35 +1,33 @@
-//Reverse an Array (Without Using Another Array).
 #include <stdio.h>
-
-void reverseArray(int arr[], int size) {
-    int temp, start = 0, end = size - 1;
-
-    while (start < end) {
-        temp = arr[start];
-        arr[start] = arr[end];
-        arr[end] = temp;
-
-        start++;
-        end--;
-    }
-}
+#include <stdlib.h>
 
 int main() {
-    int size;
+    int *arr, size, item, index, flag = 0;
     
     printf("Enter the size of the array: ");
     scanf("%d", &size);
-    int arr[size];
-
-    printf("Enter %d elements: ", size);
-    for (int i = 0; i < size; i++)
-        scanf("%d", &arr[i]);
-
-    reverseArray(arr, size);
-
-    printf("Reversed Array: ");
-    for (int i = 0; i < size; i++)
-        printf("%d ", arr[i]);
-
+    
+    arr = (int *)malloc(size * sizeof(int));
+    printf("Enter the elements of the array:\n");
+    for (index = 0; index < size; index++) {
+        scanf("%d", &arr[index]);
+    }
+    
+    printf("Enter the element to search: ");
+    scanf("%d", &item);
+    
+    for (index = 0; index < size; index++) {
+        if (arr[index] == item) {
+            flag = 1;
+            printf("Element found at index %d\n", index);
+            break;
+        }
+    }
+    
+    if (flag == 0) {
+        printf("Element not found in the array.\n");
+    }
+    
+    free(arr);
     return 0;
 }

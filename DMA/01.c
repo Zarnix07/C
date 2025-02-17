@@ -1,50 +1,65 @@
-//Merge two sorted arrays storing it in another array in sorted order.
+//Employee Structure - Sort by Salary in Descending Order.
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-void mergeSortedArrays(int arr1[], int size1, int arr2[], int size2, int merged[]) {
-    int i = 0, j = 0, k = 0;
+struct Date {
+    int day, month, year;
+};
 
-    while (i < size1 && j < size2) {
-        if (arr1[i] < arr2[j]) {
-            merged[k++] = arr1[i++];
-        } else {
-            merged[k++] = arr2[j++];
+struct Employee {
+    int empId;
+    char empName[50];
+    char empDept[50];
+    struct Date dateOfJoining;
+    float empSalary;
+};
+
+void sortEmployees(struct Employee *emp, int n) {
+    struct Employee temp;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (emp[i].empSalary < emp[j].empSalary) {
+                temp = emp[i];
+                emp[i] = emp[j];
+                emp[j] = temp;
+            }
         }
-    }
-
-    while (i < size1) {
-        merged[k++] = arr1[i++];
-    }
-
-    while (j < size2) {
-        merged[k++] = arr2[j++];
     }
 }
 
 int main() {
-    int size1, size2;
+    int n;
     
-    printf("Enter the size of first sorted array: ");
-    scanf("%d", &size1);
-    int arr1[size1];
-    printf("Enter %d sorted elements: ", size1);
-    for (int i = 0; i < size1; i++)
-        scanf("%d", &arr1[i]);
+    printf("Enter the number of employees: ");
+    scanf("%d", &n);
 
-    printf("Enter the size of second sorted array: ");
-    scanf("%d", &size2);
-    int arr2[size2];
-    printf("Enter %d sorted elements: ", size2);
-    for (int i = 0; i < size2; i++)
-        scanf("%d", &arr2[i]);
+    struct Employee *emp = (struct Employee *)malloc(n * sizeof(struct Employee));
 
-    int merged[size1 + size2];
-    mergeSortedArrays(arr1, size1, arr2, size2, merged);
+    for (int i = 0; i < n; i++) {
+        printf("\nEnter details for Employee %d:\n", i + 1);
+        printf("Employee ID: ");
+        scanf("%d", &emp[i].empId);
+        printf("Name: ");
+        scanf(" %[^\n]", emp[i].empName);
+        printf("Department: ");
+        scanf(" %[^\n]", emp[i].empDept);
+        printf("Date of Joining (DD MM YYYY): ");
+        scanf("%d %d %d", &emp[i].dateOfJoining.day, &emp[i].dateOfJoining.month, &emp[i].dateOfJoining.year);
+        printf("Salary: ");
+        scanf("%f", &emp[i].empSalary);
+    }
 
-    printf("Merged Sorted Array: ");
-    for (int i = 0; i < size1 + size2; i++)
-        printf("%d ", merged[i]);
+    sortEmployees(emp, n);
 
+    printf("\nEmployee details sorted by Salary (Descending Order):\n");
+    for (int i = 0; i < n; i++) {
+        printf("\nID: %d\nName: %s\nDepartment: %s\nDate of Joining: %02d-%02d-%04d\nSalary: %.2f\n",
+               emp[i].empId, emp[i].empName, emp[i].empDept,
+               emp[i].dateOfJoining.day, emp[i].dateOfJoining.month, emp[i].dateOfJoining.year,
+               emp[i].empSalary);
+    }
+
+    free(emp);
     return 0;
 }
-
